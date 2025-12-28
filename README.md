@@ -1,70 +1,276 @@
-# Getting Started with Create React App
+# Ecommerce Web app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack e-commerce project where you can browse, search, add & view details of products.
 
-## Available Scripts
+Built with React frontend, Express/Node backend, Mongodb database.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Demo Link
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+[Live Demo](https://major-project-frontend-kappa.vercel.app/)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Quick Start
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+git clone https://github.com/rahulCode1/MajorProject-frontend.git
+cd my-app
+npm install
+npm run dev
+```
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technologies
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- React JS
+- React Router
+- Node JS
+- Express
+- Mongodb
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Demo Video
 
-### `npm run eject`
+Watch a walkthrough (6 minutes) of all the major features of this app:
+[Google drive link](https://drive.google.com/file/d/1sRnu-lii1OZmBhoFYYujOxuP8v8na-eQ/view?usp=sharing)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Features
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+**Home**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Display different products category.
+- Search products by title, tags.
 
-## Learn More
+**Products List**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- View all products.
+- Apply different filters, Sort products via price.
+- Add, Remove products to Cart & Wishlist.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Product Details**
 
-### Code Splitting
+- View Product information.
+- View similar products.
+- Add or Remove to Cart & Wishlist.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**Cart Page**
 
-### Analyzing the Bundle Size
+- Increase or Decrease product quantity.
+- Remove from Cart.
+- Move to Wishlist.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Wishlist Page**
 
-### Making a Progressive Web App
+- All Products that added to Wishlist.
+- Move product to Cart.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+**Checkout Page**
 
-### Advanced Configuration
+- View order summary (Product that added to cart).
+- Add, Select address.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+**User Profile**
+-- Show all User information.
+-- Add, Update & delete address.
+-- View & Cancel user orders.
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## API Reference
 
-### `npm run build` fails to minify
+### **GET /api/products**<br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+List all products<br>
+Sample Response:<br>
+
+```
+[{_id, name,  description, price, ... }, ...]
+
+```
+
+## **GET /api/products/id**<br>
+
+Product details<br>
+Sample Response:<br>
+
+```
+{id, name, description, ...}
+
+```
+
+## **POST /api/product/add**<br>
+
+Add Product<br>
+Sample Response<br>
+
+```
+{name, description, price, ...}
+```
+
+## **DELETE /api/product/id**<br>
+
+Delete Product<br>
+Sample Response<br>
+
+## **POST /api/cart/id**<br>
+
+Add Product to Cart<br>
+Sample Response<br>
+
+```
+[{name, description, price, ...}, ...]
+```
+
+## **GET /api/cart/id**<br>
+
+GET ProductF from Cart<br>
+Sample Response<br>
+
+```
+[{name, description, price, ...}, ...]
+```
+
+## **PATCH /api/cart/id**<br>
+
+Increase product quantity<br>
+Sample Response<br>
+
+```
+[{name, description, price, quantity, ...}, ...]
+```
+
+## **PATCH /api/cart/decrease/id**<br>
+
+Decrease product quantity<br>
+Sample Response<br>
+
+```
+[{name, description, price, quantity, ...}, ...]
+```
+
+## **PATCH /api/cart/remove/id**<br>
+
+Remove product from Cart<br>
+Sample Response<br>
+
+## **PATCH /api/cart/moveto_wishlist/id**<br>
+
+Move Product to Wishlist<br>
+Sample Response<br>
+
+```
+[{name, description, price, quantity, ...}, ...]
+```
+
+## **POST /api/cart/wishlist/id**<br>
+
+Add or Remove Product to Wishlist<br>
+Sample Response<br>
+
+```
+[{name, description, price, quantity, ...}, ...]
+```
+
+## **PATCH /api/cart/wishlist/id**<br>
+
+Move Product to Cart.<br>
+Sample Response<br>
+
+```
+[{name, description, price, quantity, ...}, ...]
+```
+
+## **POST /api/address/new**<br>
+
+Add new Address<br>
+Sample Response<br>
+
+```
+[{name, phoneNumber, zipCode,  ...}, ...]
+```
+
+## **GET /api/address/id**<br>
+
+Get user addresses<br>
+Sample Response<br>
+
+```
+[{name, phoneNumber, zipCode,  ...}, ...]
+```
+
+## **GET /api/address/address_info/id**<br>
+
+Get user addresses information<br>
+Sample Response<br>
+
+```
+{name, phoneNumber, zipCode,  ...}
+```
+
+## **PATCH /api/address/update/:id/default**<br>
+
+Update default address.<br>
+Sample Response<br>
+
+```
+{name, phoneNumber, isDefault,  ...}
+```
+
+## **PATCH /api/address/update/:id**<br>
+
+Update address.<br>
+Sample Response<br>
+
+```
+{name, phoneNumber, isDefault,  ...}
+```
+
+## **DELETE /api/address/id**<br>
+
+Delete user addresses<br>
+
+## **POST /api/order/:id**<br>
+
+Place Order.<br>
+Sample Response<br>
+
+```
+[{products: [], orderSummary: {}, address, ...}]
+```
+
+## **GET /api/order/:id**<br>
+
+Get User Order.<br>
+Sample Response<br>
+
+```
+[{products: [], orderSummary: {}, address, ...}]
+```
+
+## **POST /api/user**<br>
+
+Add new User<br>
+Sample Response<br>
+
+```
+{name, email}
+
+
+```
+
+## **GET /api/user**<br>
+
+Get User<br>
+Sample Response<br>
+
+```
+{name, email}
+```
+
+## Contact
+
+For bugs or feature request, please reach out to rahulkumawat50555@gmail.com
