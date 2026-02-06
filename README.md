@@ -273,4 +273,4 @@ Sample Response<br>
 
 ## Contact
 
-For bugs or feature request, please reach out to rahulkumawat50555@gmail.com
+For bugs or feature request, please reach out to Email: rahulkumawat50555@gmail.com

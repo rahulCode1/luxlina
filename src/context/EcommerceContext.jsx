@@ -21,13 +21,13 @@ const EcommerceProvider = ({ children }) => {
     try {
       setIsLoadingAddress(true);
       const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}address/69384436ebe3d68324ec1040`
+        `${process.env.REACT_APP_BACKEND_URL}address/69384436ebe3d68324ec1040`,
       );
       const data = await res.json();
 
       if (!res.ok) {
         throw new Error(
-          data.message || "Error occurred while fetching address."
+          data.message || "Error occurred while fetching address.",
         );
       }
 
@@ -44,7 +44,7 @@ const EcommerceProvider = ({ children }) => {
     try {
       setIsLoadingOrders(true);
       const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}order/69384436ebe3d68324ec1040`
+        `${process.env.REACT_APP_BACKEND_URL}order/69384436ebe3d68324ec1040`,
       );
 
       const data = await res.json();
@@ -82,7 +82,7 @@ const EcommerceProvider = ({ children }) => {
     try {
       setIsLoadingCart(true);
       const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}cart/69384436ebe3d68324ec1040`
+        `${process.env.REACT_APP_BACKEND_URL}cart/69384436ebe3d68324ec1040`,
       );
 
       if (!res.ok) {
@@ -108,7 +108,7 @@ const EcommerceProvider = ({ children }) => {
     try {
       setIsLoadingWishlist(true);
       const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}wishlist/69384436ebe3d68324ec1040`
+        `${process.env.REACT_APP_BACKEND_URL}wishlist/69384436ebe3d68324ec1040`,
       );
 
       if (!res.ok) {
@@ -142,7 +142,7 @@ const EcommerceProvider = ({ children }) => {
             productId: product.id,
             quantity,
           }),
-        }
+        },
       );
 
       const data = await response.json();
@@ -184,29 +184,30 @@ const EcommerceProvider = ({ children }) => {
           body: JSON.stringify({
             productId,
           }),
-        }
+        },
       );
 
       const data = await response.json();
 
       if (!response.ok) {
         throw new Error(
-          data.message || "Failed to increase product quantity in  cart."
+          data.message || "Failed to increase product quantity in  cart.",
         );
       }
+
+      setProductCart((prevCart) => {
+        return prevCart.map((cart) => {
+          return cart.id === productId
+            ? { ...cart, quantity: data.cart.quantity }
+            : cart;
+        });
+      });
+
       toast.success("Quantity increased", { id: toastId });
     } catch (error) {
       toast.error("Failed to increase quantity", { id: toastId });
       throw new Error("Error occurred while increase product quantity.");
     }
-
-    setProductCart((prevCart) => {
-      return prevCart.map((cart) => {
-        return cart.id === productId
-          ? { ...cart, quantity: cart.quantity + 1 }
-          : cart;
-      });
-    });
   };
 
   const handleDecreaseQuantity = async (productId) => {
@@ -222,13 +223,13 @@ const EcommerceProvider = ({ children }) => {
           body: JSON.stringify({
             productId,
           }),
-        }
+        },
       );
       const data = await response.json();
 
       if (!response.ok) {
         throw new Error(
-          data.message || "Failed to decrease product quantity in  cart."
+          data.message || "Failed to decrease product quantity in  cart.",
         );
       }
 
@@ -266,7 +267,7 @@ const EcommerceProvider = ({ children }) => {
           body: JSON.stringify({
             productId,
           }),
-        }
+        },
       );
       const data = await response.json();
 
@@ -278,7 +279,7 @@ const EcommerceProvider = ({ children }) => {
     }
 
     setProductCart((prevCart) =>
-      prevCart.filter((cart) => cart.id !== productId)
+      prevCart.filter((cart) => cart.id !== productId),
     );
 
     toast.success("Successfully removed from cart.", { id: tostId });
@@ -297,7 +298,7 @@ const EcommerceProvider = ({ children }) => {
           body: JSON.stringify({
             productId: product.id,
           }),
-        }
+        },
       );
       const data = await response.json();
 
@@ -310,7 +311,7 @@ const EcommerceProvider = ({ children }) => {
 
     setWishList((prevStat) => {
       const exist = prevStat.find(
-        (wishProduct) => wishProduct.id === product.id
+        (wishProduct) => wishProduct.id === product.id,
       );
       if (exist) {
         toast.success("Product removed from wishlist.", { id: tostId });
@@ -336,7 +337,7 @@ const EcommerceProvider = ({ children }) => {
           body: JSON.stringify({
             productId: product.id,
           }),
-        }
+        },
       );
       const data = await response.json();
 
@@ -345,13 +346,13 @@ const EcommerceProvider = ({ children }) => {
       }
     } catch (error) {
       throw new Error(
-        error || "Error occurred while remove product to wishlist."
+        error || "Error occurred while remove product to wishlist.",
       );
     }
 
     setWishList((prevStat) => {
       const exist = prevStat.find(
-        (wishProduct) => wishProduct.id === product.id
+        (wishProduct) => wishProduct.id === product.id,
       );
       if (exist) {
         toast.success("Product removed from wishlist.", { id: tostId });
@@ -374,7 +375,7 @@ const EcommerceProvider = ({ children }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ productId: product.id }),
-        }
+        },
       );
 
       const data = await response.json();
@@ -403,7 +404,7 @@ const EcommerceProvider = ({ children }) => {
     });
 
     setWishList((prevStat) =>
-      prevStat.filter((wishPrd) => wishPrd.id !== product.id)
+      prevStat.filter((wishPrd) => wishPrd.id !== product.id),
     );
   };
 
@@ -419,7 +420,7 @@ const EcommerceProvider = ({ children }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ productId: product.id }),
-        }
+        },
       );
       const data = await response.json();
 
@@ -441,24 +442,22 @@ const EcommerceProvider = ({ children }) => {
     });
 
     setProductCart((prevCart) =>
-      prevCart.filter((cart) => cart.id !== product.id)
+      prevCart.filter((cart) => cart.id !== product.id),
     );
     toast.success("Product moved to Wishlist.", { id: tostId });
   };
 
-  const handleAddAddress = async (address) => {
+  const handleAddAddress = (address) => {
     setAddress((prevStat) => [...prevStat, { ...address, isDefault: false }]);
-    await fetchUserAddress();
   };
 
-  const handleRemoveAddress = async (addressId) => {
+  const handleRemoveAddress = (addressId) => {
     setAddress((prevStat) =>
-      prevStat.filter((address) => address.id !== addressId)
+      prevStat.filter((address) => address.id !== addressId),
     );
-    await fetchUserAddress();
   };
 
-  const handleUpdateAddress = async (updatedAddress) => {
+  const handleUpdateAddress = (updatedAddress) => {
     setAddress((prevStat) => {
       return prevStat.map((prevAdd) => {
         return prevAdd.id === updatedAddress.id
@@ -466,8 +465,6 @@ const EcommerceProvider = ({ children }) => {
           : prevAdd;
       });
     });
-
-    await fetchUserAddress();
   };
 
   const handleSelectDefaultAddress = async (address) => {
@@ -480,7 +477,7 @@ const EcommerceProvider = ({ children }) => {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       const data = await response.json();
@@ -517,7 +514,7 @@ const EcommerceProvider = ({ children }) => {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       const data = await response.json();
 
