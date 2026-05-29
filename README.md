@@ -1,8 +1,8 @@
-# Ecommerce Web app
+# Luxlina
 
 A full-stack e-commerce project where you can browse, search, add & view details of products.
 
-Built with React frontend, Express/Node backend, Mongodb database.
+Built with React frontend, Express/Node backend, and MongoDB database.
 
 ---
 
@@ -15,7 +15,7 @@ Built with React frontend, Express/Node backend, Mongodb database.
 ## Quick Start
 
 ```
-git clone https://github.com/rahulCode1/LUXLINA.git
+git clone https://github.com/rahulCode1/MajorProject-frontend.git
 cd my-app
 npm install
 npm run dev
@@ -273,4 +273,4 @@ Sample Response<br>
 
 ## Contact
 
-For bugs or feature request, please reach out to Email: rahulkumawat50555@gmail.com
+For bugs or feature request, please reach out to rahulkumawat50555@gmail.com
