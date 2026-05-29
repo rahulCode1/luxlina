@@ -8,14 +8,14 @@ Built with React frontend, Express/Node backend, and MongoDB database.
 
 ## Demo Link
 
-[Live Demo](https://major-project-frontend-kappa.vercel.app/)
+[Live Demo](https://luxlina.vercel.app)
 
 ---
 
 ## Quick Start
 
 ```
-git clone https://github.com/rahulCode1/MajorProject-frontend.git
+git clone https://github.com/rahulCode1/luxlina.git
 cd my-app
 npm install
 npm run dev
