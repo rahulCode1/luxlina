@@ -323,6 +323,7 @@ const AddProducts = () => {
                 src={img.previewUrl}
                 className="img-fluid rounded shadow mb-2"
                 style={{ width: "200px", objectFit: "cover" }}
+                alt="Product preview"
               />
             ))
           ) : (
@@ -336,6 +337,7 @@ const AddProducts = () => {
                 src={img.previewUrl}
                 className="img-fluid rounded shadow mb-2"
                 style={{ width: "120px", objectFit: "cover" }}
+                alt="Product preview"
               />
             ))
           ) : (

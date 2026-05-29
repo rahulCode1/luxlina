@@ -33,6 +33,8 @@ export default function UserProfile() {
 
       const data = await response.json();
 
+      console.log(data)
+
       toast.success("Address removed successfully.", { id: toastId });
       setIsLoading(false);
       handleRemoveAddress(id);

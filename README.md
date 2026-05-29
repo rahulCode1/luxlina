@@ -15,7 +15,7 @@ Built with React frontend, Express/Node backend, Mongodb database.
 ## Quick Start
 
 ```
-git clone https://github.com/rahulCode1/MajorProject-frontend.git
+git clone https://github.com/rahulCode1/LUXLINA.git
 cd my-app
 npm install
 npm run dev

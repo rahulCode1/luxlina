@@ -1,4 +1,4 @@
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import {  useNavigate, useSearchParams } from "react-router-dom";
 import kitchenCategory from "../imgs/kitchen.jpg";
 import { useState } from "react";
 import giftCategory from "../imgs/gifts.jpg";
@@ -9,7 +9,7 @@ import tray from "../imgs/tray.jpg";
 import newArrivals from "../imgs/new.jpg";
 
 const Home = () => {
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory] = useState("all");
   const [searchParams, setSearchParams] = useSearchParams();
 
   const navigate = useNavigate();

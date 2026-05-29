@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import {  useState } from "react";
 import axios from "axios";
 import { useLoaderData } from "react-router-dom";
 
@@ -48,9 +48,7 @@ const FileUpload = () => {
     console.log(data);
   };
 
-  const removeImg = (index) => {
-    setFile((file) => file.filter((_, i) => i !== index));
-  };
+ 
 
   return (
     <>
@@ -79,6 +77,7 @@ const FileUpload = () => {
                     height: "100px",
                     objectFit: "cover",
                   }}
+                  alt="Product preview"
                 />
               
               </div>
@@ -95,6 +94,7 @@ const FileUpload = () => {
                 src={img.url}
                 className="img-fluid"
                 style={{ width: "300px" }}
+                alt="Selected products"
               />
             ))}
 

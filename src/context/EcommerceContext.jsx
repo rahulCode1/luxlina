@@ -566,8 +566,6 @@ const EcommerceProvider = ({ children }) => {
         handleIncreaseQuantity,
         handleDecreaseQuantity,
         handleRemoveFromCart,
-        handleAddToWishList,
-        handleAddToWishList,
         handleRemoveToWishList,
         handleWishListToCart,
         handleCartToWishList,
