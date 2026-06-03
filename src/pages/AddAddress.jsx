@@ -21,7 +21,7 @@ const AddAddress = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const redirectTo = location.state?.from || "user";
+  const redirectTo = location.state?.from || "/user";
 
   const { handleAddAddress, fetchUserAddress } = useEcommerce();
 
