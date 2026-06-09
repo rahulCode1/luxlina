@@ -1,10 +1,25 @@
-import { FiSearch, FiHeart, FiShoppingCart, FiUser, FiX } from "react-icons/fi";
+import {
+  FiSearch,
+  FiHeart,
+  FiShoppingCart,
+  FiPackage,
+  FiUser,
+  FiShoppingBag,
+  FiLogIn,
+  FiLogOut,
+  FiX,
+  FiHome,
+  FiLock,
+} from "react-icons/fi";
 import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import { useEcommerce } from "../context/EcommerceContext";
+import { useState } from "react";
 
 const Header = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { setSearchText, productCart, wishlist, searchText } = useEcommerce();
+  const [isNavigationOpen, setNavigationOpen] = useState(false);
+  const { setSearchText, productCart, wishlist, searchText, isLogin, logout } =
+    useEcommerce();
   const navigate = useNavigate();
   const totalItemsInCart =
     productCart && productCart.length > 0
@@ -28,105 +43,174 @@ const Header = () => {
     updateQuaryParam("search", "");
   };
 
+  const toggleNavBar = () => {
+    setNavigationOpen((prevStat) => !prevStat);
+  };
+
+  const handleLogout = () => {
+    logout();
+    toggleNavBar();
+  };
   return (
     <>
-      <nav className=" bg-body-tertiary py-3 shadow-sm">
-        <div className="container d-flex align-items-center justify-content-between">
-          {/* LEFT: LOGO */}
-          <NavLink className="navbar-brand fw-bold fs-4" to="/">
-            LUXLINA
-          </NavLink>
+      <header className="w-full bg-white border-b border-gray-200">
+        <nav>
+          {/* Top row */}
+          <div className="flex items-center justify-between  px-3 md:px-5 h-14">
+            <h2 className="text-xl font-semibold text-gray-900 m-0">Luxlina</h2>
 
-          <div className="mx-3 flex-grow-1" style={{ maxWidth: "450px" }}>
-            <div className="input-group rounded-pill border overflow-hidden bg-white shadow-sm">
-              <input
-                type="text"
-                className="form-control border-0 shadow-none ps-4"
-                placeholder="Search products..."
-                style={{
-                  backgroundColor: "transparent",
-                  fontSize: "0.95rem",
-                }}
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-                onKeyPress={(e) => {
-                  if (e.key === "Enter" && searchText.length > 0) {
-                    updateQuaryParam("search", searchText);
-                  }
-                }}
-              />
-
-              {/* Clear button - only show when there's text */}
-              {searchText.length > 0 && (
+            <div className="hidden md:block grow mx-5">
+              <div className="relative">
+                <input
+                  type="text"
+                  value={searchText}
+                  placeholder="Search products…"
+                  onChange={(e) => setSearchText(e.target.value)}
+                  className="w-full h-[38px] rounded-[10px] border border-gray-200 bg-gray-50 focus:bg-white focus:border-violet-500 focus:ring-2 focus:ring-violet-100 text-gray-900 placeholder-gray-400 text-sm px-3.5 pr-8 outline-none transition-all"
+                />
+                {searchText && (
+                  <button
+                    onClick={clearSearch}
+                    className="absolute right-9 top-1/2 -translate-y-1/2 text-gray-400"
+                  >
+                    <FiX size={13} />
+                  </button>
+                )}
                 <button
-                  onClick={clearSearch}
-                  className="btn border-0 p-0"
-                  style={{
-                    backgroundColor: "transparent",
-                  }}
-                  title="Clear search"
+                  onClick={() => updateQuaryParam("search", searchText)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
                 >
-                  <FiX className="text-muted" size={20} />
+                  <FiSearch size={14} />
                 </button>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-1.5">
+              {/* Wishlist */}
+              {isLogin && (
+                <li className="list-none">
+                  <NavLink
+                    to="/wishlist"
+                    className="relative flex items-center justify-center w-10 h-10 rounded-[10px] border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    <FiHeart size={18} />
+                    {wishlist.length > 0 && (
+                      <span className="absolute top-0.5 right-0.5 min-w-[16px] h-4 flex items-center justify-center bg-violet-600 text-white text-[10px] font-semibold rounded-full px-1">
+                        {wishlist.length}
+                      </span>
+                    )}
+                  </NavLink>
+                </li>
               )}
 
-              {/* Search button */}
+              {/* Cart */}
+              {isLogin && (
+                <li className="list-none">
+                  <NavLink
+                    to="/cart"
+                    className="relative flex items-center justify-center w-10 h-10 rounded-[10px] border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    <FiShoppingCart size={18} />
+                    {totalItemsInCart > 0 && (
+                      <span className="absolute top-0.5 right-0.5 min-w-[16px] h-4 flex items-center justify-center bg-violet-600 text-white text-[10px] font-semibold rounded-full px-1">
+                        {totalItemsInCart}
+                      </span>
+                    )}
+                  </NavLink>
+                </li>
+              )}
+
+              {/* Menu toggle */}
               <button
-                onClick={() => updateQuaryParam("search", searchText)}
-                className="btn border-0 pe-3"
-                disabled={searchText.length === 0}
-                style={{
-                  backgroundColor: "transparent",
-                }}
+                onClick={toggleNavBar}
+                className="flex items-center justify-center w-10 h-10 rounded-[10px] border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 transition-colors"
               >
-                <FiSearch
-                  className={
-                    searchText.length === 0 ? "text-muted" : "text-primary"
-                  }
-                  size={20}
-                />
+                ☰
               </button>
             </div>
           </div>
 
-          {/* RIGHT: ICON NAV LINKS */}
-          <ul className="navbar-nav d-flex flex-row gap-3 align-items-center">
-            <li className="nav-item position-relative">
-              <NavLink to="/wishlist" className="nav-link position-relative">
-                <FiHeart size={22} />
-                {wishlist.length > 0 && (
-                  <span
-                    className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                    style={{ fontSize: "0.65rem", padding: "0.25em 0.5em" }}
-                  >
-                    {wishlist.length}
-                  </span>
-                )}
-              </NavLink>
-            </li>
+          {/* Search */}
+          <div className="px-3 pb-3.5 md:hidden">
+            <div className="relative">
+              <input
+                type="text"
+                value={searchText}
+                placeholder="Search products…"
+                onChange={(e) => setSearchText(e.target.value)}
+                className="w-full h-[38px] rounded-[10px] border border-gray-200 bg-gray-50 focus:bg-white focus:border-violet-500 focus:ring-2 focus:ring-violet-100 text-gray-900 placeholder-gray-400 text-sm px-3.5 pr-8 outline-none transition-all"
+              />
+              {searchText && (
+                <button
+                  onClick={clearSearch}
+                  className="absolute right-9 top-1/2 -translate-y-1/2 text-gray-400"
+                >
+                  <FiX size={13} />
+                </button>
+              )}
+              <button
+                onClick={() => updateQuaryParam("search", searchText)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+              >
+                <FiSearch size={14} />
+              </button>
+            </div>
+          </div>
 
-            <li className="nav-item">
-              <NavLink to="/cart" className="nav-link position-relative">
-                <FiShoppingCart size={22} />
-                {totalItemsInCart > 0 && (
-                  <span
-                    className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary"
-                    style={{ fontSize: "0.65rem", padding: "0.25em 0.5em" }}
+          {/* Dropdown */}
+          {isNavigationOpen && (
+            <div className="border-t border-gray-100 py-1.5">
+              {[
+                { to: "/", label: "Home", Icon: FiHome },
+                { to: "/products", label: "Products", Icon: FiPackage },
+                ...(isLogin
+                  ? [
+                      {
+                        to: "/orders",
+                        label: "My Orders",
+                        Icon: FiShoppingBag,
+                      },
+                      { to: "/user", label: "Profile", Icon: FiUser },
+                    ]
+                  : [
+                      { to: "/signup", label: "Signup", Icon: FiLock },
+                      { to: "/login", label: "Login", Icon: FiLogIn },
+                    ]),
+              ].map(({ to, label, Icon }) => (
+                <li key={to} className="list-none" onClick={toggleNavBar}>
+                  <NavLink
+                    to={to}
+                    className={({ isActive }) =>
+                      `flex items-center gap-2.5 px-5 py-2.5 text-sm no-underline transition-colors
+                 ${
+                   isActive
+                     ? "bg-violet-50 text-violet-600 font-medium"
+                     : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                 }`
+                    }
                   >
-                    {totalItemsInCart}
-                  </span>
-                )}
-              </NavLink>
-            </li>
+                    <Icon size={16} />
+                    {label}
+                  </NavLink>
+                </li>
+              ))}
 
-            <li className="nav-item">
-              <NavLink to="/user" className="nav-link">
-                <FiUser size={22} />
-              </NavLink>
-            </li>
-          </ul>
-        </div>
-      </nav>
+              {isLogin && (
+                <>
+                  <div className="h-px bg-gray-100 my-1 mx-5" />
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-2.5 px-5 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                  >
+                    <FiLogOut size={16} />
+                    Logout
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+        </nav>
+      </header>
     </>
   );
 };

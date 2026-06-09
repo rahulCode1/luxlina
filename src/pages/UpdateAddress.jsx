@@ -3,6 +3,7 @@ import { indianStates } from "../data/products";
 import { useEcommerce } from "../context/EcommerceContext";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import Loading from "../components/Loading";
+import api from "../utils/axios";
 
 const UpdateAddress = () => {
   const [formData, setFormData] = useState({});
@@ -13,8 +14,6 @@ const UpdateAddress = () => {
 
   const data = useLoaderData();
   const addressInfo = data.data.address;
-
-
 
   useEffect(() => {
     setFormData({ ...addressInfo, id: addressInfo.id });
@@ -28,33 +27,20 @@ const UpdateAddress = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}address/update/${addressId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
+      const response = await api.patch(
+        `/address/update/${addressId}`,
+        formData,
       );
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.message || "Failed to update address, Please try again later."
-        );
-      }
-
+      console.log(response.data);
       navigate("/user");
 
       handleUpdateAddress(formData);
     } catch (error) {
       throw new Error(error);
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   return (
@@ -197,18 +183,11 @@ export default UpdateAddress;
 export const loader = async ({ request, params }) => {
   const addressId = params.id;
 
-  const response = await fetch(
-    `${process.env.REACT_APP_BACKEND_URL}address/address_info/${addressId}`
-  );
+  try {
+    const response = await api.get(`/address/address_info/${addressId}`);
 
-  if (!response.ok) {
-    throw new Response(
-      JSON.stringify(
-        { message: "Error occurred while fetching address details." },
-        { status: 500 }
-      )
-    );
-  } else {
-    return response;
+    return response.data;
+  } catch (err) {
+    console.log(err);
   }
 };

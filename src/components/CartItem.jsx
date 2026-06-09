@@ -14,9 +14,7 @@ const CartList = ({
   handleCartToWishList,
   fetchUserCarts,
 }) => {
-  useEffect(() => {
-    fetchUserCarts(productCart);
-  }, [productCart]);
+
 
   return (
     <>

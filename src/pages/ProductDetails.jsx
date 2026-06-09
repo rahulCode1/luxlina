@@ -19,7 +19,7 @@ export default ProductDetails;
 
 const productDetails = async (productId) => {
   const response = await fetch(
-    `${process.env.REACT_APP_BACKEND_URL}product/${productId}`
+    `${process.env.REACT_APP_BACKEND_URL}/product/${productId}`
   );
 
 

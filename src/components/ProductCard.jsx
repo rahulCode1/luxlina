@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEcommerce } from "../context/EcommerceContext";
 export default function ProductCard({ product }) {
   const {
@@ -8,6 +8,7 @@ export default function ProductCard({ product }) {
     handleAddToCart,
     handleRemoveToWishList,
   } = useEcommerce();
+  const navigate = useNavigate();
   const checkProductIsWishlist = (id) => {
     return wishlist.some((product) => product.id === id);
   };
@@ -22,8 +23,8 @@ export default function ProductCard({ product }) {
       <button
         onClick={() =>
           checkProductIsWishlist(product.id)
-            ? handleRemoveToWishList(product)
-            : handleAddToWishList(product)
+            ? handleRemoveToWishList(product, navigate)
+            : handleAddToWishList(product, navigate)
         }
         className="btn btn-light position-absolute top-0 end-0 m-3 rounded-circle shadow-sm d-flex align-items-center justify-content-center"
         style={{
@@ -147,7 +148,7 @@ export default function ProductCard({ product }) {
             </Link>
           ) : (
             <button
-              onClick={() => handleAddToCart(product, 1)}
+              onClick={() => handleAddToCart(product, 1, navigate)}
               className="btn btn-dark w-100 py-2 rounded-pill fw-medium"
               style={{
                 letterSpacing: "0.3px",

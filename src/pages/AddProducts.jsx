@@ -11,6 +11,7 @@ import {
   ratingField,
   materialTypeField,
 } from "../utils/arrays";
+import api from "../utils/axios";
 
 const AddProducts = () => {
   const initialFormData = {
@@ -127,20 +128,12 @@ const AddProducts = () => {
         appendData.append("images", img);
       });
 
-      const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}product/add`,
-        {
-          method: "POST",
-          body: appendData,
-        }
-      );
-      const data = await res.json();
+      const res = await api.post(`/product/add`, appendData);
 
-      if (!res.ok) {
-        throw new Error(data.message || "Failed to add new product.");
-      }
-
-      toast.success("Product added successfully.", { id: tostId });
+      // console.log(res.data);
+      toast.success(res.data?.message || "Product added successfully.", {
+        id: tostId,
+      });
 
       setFormData(initialFormData);
       setSelectedFiles([]);
@@ -149,10 +142,14 @@ const AddProducts = () => {
 
       navigate("/products");
     } catch (error) {
-      setError(error.message || "An error occurred while add new product.");
+      setError(
+        error.response?.data?.message ||
+          "An error occurred while add new product.",
+      );
       toast.error("An error occurred while add new product.", { id: tostId });
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (

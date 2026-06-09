@@ -2,29 +2,36 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEcommerce } from "../context/EcommerceContext";
 import { toast } from "react-hot-toast";
 import Loading from "../components/Loading";
-
+import api from "../utils/axios";
 import { useState } from "react";
+import ErrorModal from "../components/ErrorModal";
 
 const Checkout = () => {
   const [payment, setPayment] = useState("cod");
   const [isLoading, setIsLoading] = useState(false);
-  const { productCart, address, handleSelectDefaultAddress, handlePlaceOrder } =
-    useEcommerce();
+  const {
+    error,
+    setError,
+    productCart,
+    setProductCart,
+    address,
+    handleSelectDefaultAddress,
+  } = useEcommerce();
   const navigate = useNavigate();
 
   const totalPrice = productCart.reduce(
     (acc, curr) => acc + Number(curr.discountPrice) * curr.quantity,
-    0
+    0,
   );
 
   const totalQuantity = productCart.reduce(
     (acc, curr) => acc + curr.quantity,
-    0
+    0,
   );
 
   const totalDiscount = productCart.reduce(
     (acc, curr) => acc + (Number(curr.price) - Number(curr.discountPrice)),
-    0
+    0,
   );
 
   const selectedAddress =
@@ -34,11 +41,11 @@ const Checkout = () => {
 
   const handleSubmitOrder = async () => {
     if (address.length === 0) {
-      return alert("Please add address.");
+      return setError("Please add address.");
     }
 
     if (address.length !== 0 && !selectedAddress) {
-      return alert("Please select an address.");
+      return setError("Please select an address.");
     }
 
     const toastId = toast.loading("Place order...");
@@ -62,43 +69,30 @@ const Checkout = () => {
       },
       paymentMethod: payment,
       paymentStatus: payment === "online" ? "completed" : "pending",
-      orderPlacedBy: "69384436ebe3d68324ec1040"
+      orderPlacedBy: "69384436ebe3d68324ec1040",
     };
 
     setIsLoading(true);
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}order/69384436ebe3d68324ec1040`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(order),
-        }
-      );
+      const response = await api.post(`/order`, order);
 
-      const data = await response.json();
-
-      // console.log(data)
-
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to place order.");
-      }
-
-      handlePlaceOrder(order);
-
+      setProductCart([]);
       navigate("/orders");
-
-      toast.success("Order place successfully.", { id: toastId });
+      // console.log(response.data);
+      toast.success(response.data?.message || "Order place successfully.", {
+        id: toastId,
+      });
     } catch (error) {
       toast.error("Error occurred while place order.", { id: toastId });
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (
     <main className="container py-4">
+      {error && <ErrorModal message={error} onClose={() => setError(null)} />}
+
       {isLoading && (
         <div className="overlay">
           <Loading />

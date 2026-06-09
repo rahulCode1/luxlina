@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 import { useEcommerce } from "../context/EcommerceContext";
 import ProductImageCarousel from "./ProductImageCarousel";
@@ -13,7 +13,8 @@ const ProductItem = ({ productData }) => {
   const [quantity, setQuantity] = useState(1);
   const { productCart, wishlist, handleAddToWishList, handleAddToCart } =
     useEcommerce();
-  const productId = useParams().id;
+  const navigate = useNavigate();
+  const productId = useParams()?.id;
 
   const productInfo = productData.data.product;
   const similarProducts = productData.data.similarProducts;
@@ -90,7 +91,7 @@ const ProductItem = ({ productData }) => {
                     {Math.round(
                       ((productInfo.price - productInfo.discountPrice) /
                         productInfo.price) *
-                        100
+                        100,
                     )}
                     % OFF
                   </span>
@@ -157,7 +158,7 @@ const ProductItem = ({ productData }) => {
                         ) : (
                           <button
                             onClick={() =>
-                              handleAddToCart(productInfo, quantity)
+                              handleAddToCart(productInfo, quantity, navigate)
                             }
                             className="btn btn-dark flex-grow-1 py-2 py-sm-3 fw-semibold"
                           >
@@ -175,7 +176,9 @@ const ProductItem = ({ productData }) => {
                           </Link>
                         ) : (
                           <button
-                            onClick={() => handleAddToWishList(productInfo)}
+                            onClick={() =>
+                              handleAddToWishList(productInfo, navigate)
+                            }
                             className="btn btn-outline-secondary py-2 py-sm-3 fw-semibold"
                             style={{ minWidth: "48px" }}
                           >
@@ -254,7 +257,6 @@ const ProductItem = ({ productData }) => {
 
                 <div className="card border-0 bg-light">
                   <div className="card-body p-3 p-md-4">
-                   
                     <div>
                       <strong className="d-block mb-2 text-dark small">
                         Description:

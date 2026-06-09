@@ -5,6 +5,7 @@ import { useEcommerce } from "../context/EcommerceContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
 import ErrorModal from "../components/ErrorModal";
+import api from "../utils/axios";
 
 const AddAddress = () => {
   const initialValue = {
@@ -23,7 +24,7 @@ const AddAddress = () => {
   const location = useLocation();
   const redirectTo = location.state?.from || "/user";
 
-  const { handleAddAddress, fetchUserAddress } = useEcommerce();
+  const { handleAddAddress } = useEcommerce();
 
   const handleOnChange = (e) => {
     setFormData((prevStat) => ({ ...prevStat, [e.target.id]: e.target.value }));
@@ -36,39 +37,20 @@ const AddAddress = () => {
     setError(null);
     setIsLoading(true);
     try {
-      const res = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}address/new`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ...formData,
-            userId: "69384436ebe3d68324ec1040",
-          }),
-        }
-      );
+      const res = await api.post(`/address/new`, formData);
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Failed to add new address.");
-      }
-
-      handleAddAddress(formData);
-      await fetchUserAddress();
+      // console.log(res.data);
+      handleAddAddress({ ...res.data.address });
       setFormData(initialValue);
-
       navigate(redirectTo);
 
       toast.success("Address added successfully.", { id: tostId });
     } catch (error) {
       setError(error.message || "Something went wrong while add new address");
       toast.error("Something went wrong while add new address", { id: tostId });
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   return (

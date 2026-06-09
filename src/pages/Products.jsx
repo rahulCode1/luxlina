@@ -25,7 +25,7 @@ const Products = () => {
 export default Products;
 
 const products = async () => {
-  let url = `${process.env.REACT_APP_BACKEND_URL}products`;
+  let url = `${process.env.REACT_APP_BACKEND_URL}/products`;
 
   try {
     const res = await fetch(url);

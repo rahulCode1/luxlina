@@ -1,9 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useLoaderData, useRevalidator } from "react-router-dom";
 import { useEcommerce } from "../context/EcommerceContext";
 import Loading from "../components/Loading";
+import api from "../utils/axios";
 
 const AllOrders = () => {
-  const { userOrders, handleCancelOrder, isLoadingOrders } = useEcommerce();
+  const revalidator = useRevalidator().revalidate;
+  const { handleCancelOrder, isLoadingOrders } = useEcommerce();
+  const userOrders = useLoaderData()?.orders;
 
   const getStatusBadge = (status) => {
     const statusColors = {
@@ -18,8 +21,6 @@ const AllOrders = () => {
     };
     return statusColors[status] || "secondary";
   };
-
-
 
   return (
     <div className="container my-5">
@@ -49,14 +50,14 @@ const AllOrders = () => {
                               year: "numeric",
                               month: "long",
                               day: "numeric",
-                            }
+                            },
                           )}
                         </small>
                       </div>
                       <div className="text-end">
                         <span
                           className={`badge bg-${getStatusBadge(
-                            order.paymentStatus
+                            order.paymentStatus,
                           )} me-2`}
                         >
                           Payment: {order.paymentStatus}
@@ -99,29 +100,29 @@ const AllOrders = () => {
                             </h6>
                             <div className="d-flex justify-content-between mb-2">
                               <span className="text-muted">Total Items:</span>
-                              <strong>{order.totalQuantity}</strong>
+                              <strong>{order?.summary?.totalQuantity}</strong>
                             </div>
                             <div className="d-flex justify-content-between mb-2">
                               <span className="text-muted">Subtotal:</span>
                               <span>
                                 ₹
                                 {(
-                                  order.totalPrice +
-                                  order.totalDiscount
+                                  order?.summary?.totalPrice +
+                                  order?.summary?.totalDiscount
                                 ).toFixed(2)}
                               </span>
                             </div>
                             <div className="d-flex justify-content-between mb-2 text-success">
                               <span>Discount:</span>
                               <span>
-                                -₹{order.totalDiscount.toFixed(2)}
+                                -₹{order?.summary?.totalDiscount.toFixed(2)}
                               </span>
                             </div>
                             <hr />
                             <div className="d-flex justify-content-between">
                               <strong className="text-dark">Total:</strong>
                               <strong className="text-primary fs-5">
-                                ₹{order.totalPrice.toFixed(2)}
+                                ₹{order?.summary?.totalPrice.toFixed(2)}
                               </strong>
                             </div>
                           </div>
@@ -137,7 +138,7 @@ const AllOrders = () => {
                               {order.orderStatus !== "cancelled" &&
                                 order.orderStatus !== "delivered" && (
                                   <button
-                                    onClick={() => handleCancelOrder(order.id)}
+                                    onClick={() => handleCancelOrder(order.id, revalidator)}
                                     className="btn btn-outline-danger btn-sm"
                                   >
                                     <i className="bi bi-x-circle me-2"></i>
@@ -165,12 +166,12 @@ const AllOrders = () => {
                               </tr>
                             </thead>
                             <tbody>
-                               {order.products.map((product, pIndex) => (
+                              {order.products.map((product, pIndex) => (
                                 <tr key={pIndex}>
                                   <td>
                                     <div className="d-flex align-items-center">
-                                       <img
-                                        src={product.images[0].url}
+                                      <img
+                                        src={product?.productId?.images[0].url}
                                         alt={product.name}
                                         className="rounded me-3"
                                         style={{
@@ -178,32 +179,38 @@ const AllOrders = () => {
                                           height: "80px",
                                           objectFit: "cover",
                                         }}
-                                      /> 
+                                      />
                                       <div>
                                         <h6 className="mb-0">{product.name}</h6>
                                         <small className="text-muted">
-                                          Material: {product.materialType}
+                                          Material:{" "}
+                                          {product?.productId?.materialType}
                                         </small>
                                       </div>
                                     </div>
                                   </td>
                                   <td>
                                     <small className="text-muted">
-                                      <div>Height: {product.height} cm</div>
+                                      <div>
+                                        Height: {product?.productId?.height} cm
+                                      </div>
                                     </small>
                                   </td>
                                   <td className="text-center">
                                     <span className="badge bg-secondary">
-                                      Qty: {product.quantity}
+                                      Qty: {product?.productId?.quantity}
                                     </span>
                                   </td>
                                   <td className="text-end">
                                     <strong className="text-primary">
-                                      ₹{product.discountPrice.toFixed(2)}
+                                      ₹
+                                      {product?.productId?.discountPrice.toFixed(
+                                        2,
+                                      )}
                                     </strong>
                                   </td>
                                 </tr>
-                              ))} 
+                              ))}
                             </tbody>
                           </table>
                         </div>
@@ -239,3 +246,14 @@ const AllOrders = () => {
 };
 
 export default AllOrders;
+
+export const loader = async () => {
+  try {
+    const res = await api.get("/order");
+
+    // console.log(res.data);
+    return res.data;
+  } catch (err) {
+    console.log(err.response?.data?.message);
+  }
+};

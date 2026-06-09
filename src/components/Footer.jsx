@@ -1,9 +1,16 @@
-import { FiSearch, FiShoppingCart, FiUser, FiHome } from "react-icons/fi";
+import {
+  FiPackage,
+  FiShoppingCart,
+  FiUser,
+  FiHome,
+  FiLogIn,
+  FiLock,
+} from "react-icons/fi";
 import { NavLink } from "react-router-dom";
 import { useEcommerce } from "../context/EcommerceContext";
 
 const Footer = () => {
-  const { productCart } = useEcommerce();
+  const { productCart, isLogin } = useEcommerce();
 
   const totalItemsInCart =
     productCart && productCart.length > 0
@@ -11,7 +18,7 @@ const Footer = () => {
       : 0;
 
   return (
-    <footer className="position-fixed bottom-0 start-0 bg-light w-100">
+    <footer className="d-md-none position-fixed bottom-0 start-0 bg-light w-100">
       <div className="container">
         <ul className="navbar-nav d-flex flex-row justify-content-evenly">
           <li className="nav-item">
@@ -37,7 +44,7 @@ const Footer = () => {
                 } nav-link`
               }
             >
-              <FiSearch size={22} />
+              <FiPackage size={22} />
             </NavLink>
           </li>
           <li className="nav-item">
@@ -61,18 +68,50 @@ const Footer = () => {
             </NavLink>
           </li>
 
-          <li className="nav-item">
-            <NavLink
-              to="/user"
-              className={({ isActive }) =>
-                `${
-                  isActive ? "bg-dark text-light rounded shadow px-3" : ""
-                } nav-link`
-              }
-            >
-              <FiUser size={22} />
-            </NavLink>
-          </li>
+          {!isLogin && (
+            <li className="nav-item">
+              <NavLink
+                to="/signup"
+                className={({ isActive }) =>
+                  `${
+                    isActive ? "bg-dark text-light rounded shadow px-3" : ""
+                  } nav-link`
+                }
+              >
+                <FiLock size={22} />
+              </NavLink>
+            </li>
+          )}
+
+          {!isLogin && (
+            <li className="nav-item">
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  `${
+                    isActive ? "bg-dark text-light rounded shadow px-3" : ""
+                  } nav-link`
+                }
+              >
+                <FiLogIn size={22} />
+              </NavLink>
+            </li>
+          )}
+
+          {isLogin && (
+            <li className="nav-item">
+              <NavLink
+                to="/user"
+                className={({ isActive }) =>
+                  `${
+                    isActive ? "bg-dark text-light rounded shadow px-3" : ""
+                  } nav-link`
+                }
+              >
+                <FiUser size={22} />
+              </NavLink>
+            </li>
+          )}
         </ul>
       </div>
     </footer>
