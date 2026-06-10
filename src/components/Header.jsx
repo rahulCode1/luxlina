@@ -60,6 +60,7 @@ const Header = () => {
             <h2 className="text-xl font-semibold text-gray-900 m-0">Luxlina</h2>
 
             <div className="hidden md:block grow mx-5">
+              {/* Inline search for md and large screen */}
               <div className="relative">
                 <input
                   type="text"
@@ -86,6 +87,24 @@ const Header = () => {
             </div>
 
             <div className="flex items-center gap-1.5">
+              <li className="list-none hidden md:block">
+                <NavLink
+                  to="/"
+                  className="relative flex items-center justify-center w-10 h-10 rounded-[10px] border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  <FiHome size={18} />
+                </NavLink>
+              </li>
+
+              <li className="list-none hidden md:block">
+                <NavLink
+                  to="/products"
+                  className="relative flex items-center justify-center w-10 h-10 rounded-[10px] border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  <FiShoppingBag size={18} />
+                </NavLink>
+              </li>
+
               {/* Wishlist */}
               {isLogin && (
                 <li className="list-none">
@@ -125,12 +144,12 @@ const Header = () => {
                 onClick={toggleNavBar}
                 className="flex items-center justify-center w-10 h-10 rounded-[10px] border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 transition-colors"
               >
-                ☰
+                {isNavigationOpen ? "X" : "☰"}
               </button>
             </div>
           </div>
 
-          {/* Search */}
+          {/* Search for small screen*/}
           <div className="px-3 pb-3.5 md:hidden">
             <div className="relative">
               <input
@@ -162,13 +181,13 @@ const Header = () => {
             <div className="border-t border-gray-100 py-1.5">
               {[
                 { to: "/", label: "Home", Icon: FiHome },
-                { to: "/products", label: "Products", Icon: FiPackage },
+                { to: "/products", label: "Products", Icon: FiShoppingBag },
                 ...(isLogin
                   ? [
                       {
                         to: "/orders",
                         label: "My Orders",
-                        Icon: FiShoppingBag,
+                        Icon: FiPackage,
                       },
                       { to: "/user", label: "Profile", Icon: FiUser },
                     ]

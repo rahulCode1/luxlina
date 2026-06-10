@@ -63,6 +63,8 @@ const EcommerceProvider = ({ children }) => {
         setIsLoadingCart(false);
       } catch (error) {
         console.error("Failed to fetch cart.", error);
+      }finally{
+        setIsLoadingCart(false)
       }
     };
 

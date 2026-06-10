@@ -140,7 +140,7 @@ const AddProducts = () => {
       setTags([]);
       setImgPreviewUrl([]);
 
-      navigate("/products");
+      // navigate("/products");
     } catch (error) {
       setError(
         error.response?.data?.message ||

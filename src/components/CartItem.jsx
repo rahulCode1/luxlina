@@ -4,7 +4,6 @@ import {
   totalQuantity,
   totalDiscount,
 } from "../functions/reUseFunctions";
-import { useEffect } from "react";
 
 const CartList = ({
   productCart,
@@ -15,6 +14,7 @@ const CartList = ({
   fetchUserCarts,
 }) => {
 
+  console.log(productCart)
 
   return (
     <>

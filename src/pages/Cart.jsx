@@ -18,6 +18,8 @@ const Cart = () => {
     handleCartToWishList,
   } = useEcommerce();
 
+  console.log(productCart)
+
   const isExistOnWishlist = (productId) => {
     return wishlist.some((wish) => wish.id === productId);
   };
