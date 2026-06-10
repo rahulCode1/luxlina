@@ -50,7 +50,7 @@ const Login = () => {
       toast.error(error.response?.data?.message || "Login failed.", {
         id: toastId,
       });
-      alert(error.response?.data?.message || "Login failed.");
+      
     } finally {
       setIsLoading(false);
     }

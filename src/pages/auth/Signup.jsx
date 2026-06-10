@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { useEcommerce } from "../../context/EcommerceContext";
+import ErrorModal from "../../components/ErrorModal";
 
 const Signup = () => {
   const initialState = {
@@ -11,8 +13,8 @@ const Signup = () => {
   };
   const [formData, setFormData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
+  const { error, setError } = useEcommerce();
   const navigate = useNavigate();
- 
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -31,7 +33,7 @@ const Signup = () => {
         formData,
       );
 
-      console.log(response.data);
+      // console.log(response.data);
       setFormData(initialState);
 
       toast.success(response.data.message || "User created successfully", {
@@ -39,6 +41,7 @@ const Signup = () => {
       });
       navigate("/login");
     } catch (error) {
+      setError(error.response?.data?.message || "Signup failed.");
       toast.error(error.response?.data?.message || "Signup failed.", {
         id: toastId,
       });
@@ -49,6 +52,7 @@ const Signup = () => {
 
   return (
     <div className="container">
+      {error && <ErrorModal message={error} onClose={() => setError(null)} />}
       <div
         className="row justify-content-center align-items-center"
         style={{ minHeight: "100vh" }}

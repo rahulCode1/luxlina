@@ -1,16 +1,17 @@
 import {
-  FiPackage,
+  FiLogOut,
   FiShoppingCart,
   FiUser,
   FiHome,
   FiLogIn,
   FiLock,
+  FiShoppingBag,
 } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
 import { useEcommerce } from "../context/EcommerceContext";
 
 const Footer = () => {
-  const { productCart, isLogin } = useEcommerce();
+  const { productCart, isLogin, logout } = useEcommerce();
 
   const totalItemsInCart =
     productCart && productCart.length > 0
@@ -19,8 +20,8 @@ const Footer = () => {
 
   return (
     <footer className="d-md-none position-fixed bottom-0 start-0 bg-light w-100">
-      <div className="container">
-        <ul className="navbar-nav d-flex flex-row justify-content-evenly">
+      <div className="container px-4">
+        <ul className="navbar-nav d-flex flex-row justify-content-between">
           <li className="nav-item">
             <NavLink
               to="/"
@@ -44,7 +45,7 @@ const Footer = () => {
                 } nav-link`
               }
             >
-              <FiPackage size={22} />
+              <FiShoppingBag size={22} />
             </NavLink>
           </li>
           <li className="nav-item">
@@ -110,6 +111,14 @@ const Footer = () => {
               >
                 <FiUser size={22} />
               </NavLink>
+            </li>
+          )}
+
+          {isLogin && (
+            <li className="nav-item">
+              <button onClick={logout} className="px-2  nav-link">
+                <FiLogOut size={22} />
+              </button>
             </li>
           )}
         </ul>

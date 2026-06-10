@@ -14,7 +14,7 @@ const CartList = ({
   fetchUserCarts,
 }) => {
 
-  console.log(productCart)
+  
 
   return (
     <>

@@ -27,6 +27,8 @@ const ProductItem = ({ productData }) => {
     return productCart.some((cart) => cart.id === id);
   };
 
+  
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [productId]);
@@ -109,84 +111,85 @@ const ProductItem = ({ productData }) => {
                   </div>
                 </div>
 
-                <div className="card border mb-2">
+                <div className="card border mb-3">
                   <div className="card-body p-3">
                     <label className="form-label fw-bold mb-3 small text-uppercase">
                       Select Quantity
                     </label>
 
-                    <div className="d-flex flex-column flex-sm-row gap-3 align-items-sm-center">
+                    <div className="d-flex gap-2 mb-3">
+                      {/* Quantity */}
                       <div
-                        className="input-group"
-                        style={{ maxWidth: "130px" }}
+                        className="input-group flex-grow-1"
+                        style={{ maxWidth: "180px" }}
                       >
                         <button
                           disabled={quantity === 1}
-                          onClick={() =>
-                            setQuantity((prevStat) => prevStat - 1)
-                          }
-                          className="btn btn-outline-secondary px-3"
+                          onClick={() => setQuantity((prev) => prev - 1)}
+                          className="btn btn-outline-dark"
                           type="button"
                         >
                           <i className="bi bi-dash"></i>
                         </button>
+
                         <input
                           type="text"
                           className="form-control text-center fw-bold"
                           value={quantity}
                           readOnly
                         />
+
                         <button
-                          onClick={() =>
-                            setQuantity((prevStat) => prevStat + 1)
-                          }
-                          className="btn btn-outline-secondary px-3"
+                          onClick={() => setQuantity((prev) => prev + 1)}
+                          className="btn btn-outline-dark"
                           type="button"
                         >
                           <i className="bi bi-plus"></i>
                         </button>
                       </div>
 
-                      <div className="d-flex gap-2 flex-grow-1 flex-column flex-sm-row">
-                        {checkProductIsInCart(productInfo.id) ? (
-                          <Link
-                            to="/cart"
-                            className="btn btn-dark flex-grow-1 py-2 py-sm-3 fw-semibold"
-                          >
-                            <i className="bi bi-cart-check me-2"></i>Go to Cart
-                          </Link>
-                        ) : (
-                          <button
-                            onClick={() =>
-                              handleAddToCart(productInfo, quantity, navigate)
-                            }
-                            className="btn btn-dark flex-grow-1 py-2 py-sm-3 fw-semibold"
-                          >
-                            <i className="bi bi-cart-plus me-2"></i>Add to Cart
-                          </button>
-                        )}
-
-                        {checkProductIsWishlist(productInfo.id) ? (
-                          <Link
-                            to="/wishlist"
-                            className="btn btn-outline-danger py-2 py-sm-3 fw-semibold"
-                            style={{ minWidth: "48px" }}
-                          >
-                            <i className="bi bi-heart-fill"></i>
-                          </Link>
-                        ) : (
-                          <button
-                            onClick={() =>
-                              handleAddToWishList(productInfo, navigate)
-                            }
-                            className="btn btn-outline-secondary py-2 py-sm-3 fw-semibold"
-                            style={{ minWidth: "48px" }}
-                          >
-                            <i className="bi bi-heart"></i>
-                          </button>
-                        )}
-                      </div>
+                      {/* Wishlist */}
+                      {checkProductIsWishlist(productInfo.id) ? (
+                        <Link
+                          to="/wishlist"
+                          className="btn btn-outline-danger d-flex align-items-center justify-content-center"
+                          style={{ width: "56px" }}
+                        >
+                          <i className="bi bi-heart-fill"></i>
+                        </Link>
+                      ) : (
+                        <button
+                          onClick={() =>
+                            handleAddToWishList(productInfo, navigate)
+                          }
+                          className="btn btn-outline-secondary"
+                          style={{ width: "56px" }}
+                        >
+                          <i className="bi bi-heart"></i>
+                        </button>
+                      )}
                     </div>
+
+                    {/* Add To Cart */}
+                    {checkProductIsInCart(productInfo.id) ? (
+                      <Link
+                        to="/cart"
+                        className="btn btn-dark w-100 py-3 fw-semibold"
+                      >
+                        <i className="bi bi-cart-check me-2"></i>
+                        Go To Cart
+                      </Link>
+                    ) : (
+                      <button
+                        onClick={() =>
+                          handleAddToCart(productInfo, quantity, navigate)
+                        }
+                        className="btn btn-dark w-100 py-3 fw-semibold"
+                      >
+                        <i className="bi bi-cart-plus me-2"></i>
+                        Add To Cart
+                      </button>
+                    )}
                   </div>
                 </div>
 
