@@ -74,11 +74,11 @@ const AllOrders = () => {
                               Shipping Address
                             </h6>
                             <p className="mb-2">
-                              <strong>{order.address.name}</strong>
+                              <strong>{order.address?.name}</strong>
                             </p>
                             <p className="mb-1 text-muted small">
                               <i className="bi bi-telephone-fill me-2"></i>
-                              {order.address.phoneNumber}
+                              {order.address?.phoneNumber}
                             </p>
                             <p className="mb-1 text-muted small">
                               {order.address.fullAddress}

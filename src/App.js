@@ -14,7 +14,7 @@ import AddProducts from "./pages/AddProducts";
 import AddAddress from "./pages/AddAddress";
 import Checkout from "./pages/Checkout";
 import NotFound from "./components/NotFound";
-import ErrorPage from "./pages/ErrorPage";
+// import ErrorPage from "./pages/ErrorPage";
 import { lazy, Suspense } from "react";
 import Loading from "./components/Loading";
 import ProtectedRoutes from "./components/auth/ProtectedRoutes";
@@ -34,7 +34,7 @@ function App() {
     {
       path: "/",
       element: <Layout />,
-      errorElement: <ErrorPage />,
+      // errorElement: <ErrorPage />,
       children: [
         { index: true, element: <Home /> },
         {
