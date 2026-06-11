@@ -88,12 +88,7 @@ const Home = () => {
                 cursor: "pointer",
                 transition: "transform 0.3s ease",
               }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.transform = "translateY(-8px)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.transform = "translateY(0)")
-              }
+            
             >
               <div
                 className={`position-relative overflow-hidden ${
@@ -141,7 +136,7 @@ const Home = () => {
           <div className="rounded-4 overflow-hidden shadow-lg position-relative">
             <img
               src={ganesh}
-              className="img-fluid w-100 h-100"
+              className="img-fluid"
               alt="Banner"
               style={{
                 maxHeight: "700px",
