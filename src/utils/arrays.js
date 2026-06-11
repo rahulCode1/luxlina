@@ -140,5 +140,7 @@ export const categoryField = {
     { value: "CorporateGifts", label: "Corporate Gifts" },
     { value: "ReligiousItems", label: "Religious Items" },
     { value: "New Arrivals", label: "New Arrivals" },
+    { value: "Garden Outdoor", label: "Garden Outdoor" },
+    { value: "Marble Candles", label: "Marble Candles" },
   ],
 };

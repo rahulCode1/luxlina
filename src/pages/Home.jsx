@@ -7,6 +7,8 @@ import decoreCategory from "../imgs/decores.jpg";
 import ganesh from "../imgs/ganesh.png";
 import decore from "../imgs/decore.png";
 import deepak from "../imgs/deepak.png";
+import marbleDeepak from "../imgs/marbleDeepak.png";
+import stand from "../imgs/stand.png";
 
 const Home = () => {
   const [selectedCategory] = useState("all");
@@ -34,6 +36,16 @@ const Home = () => {
       name: "Religious Items",
       category: "ReligiousItems",
       imgUrl: religiousCategory,
+    },
+    {
+      name: "Garden Outdoor",
+      category: "Garden Outdoor",
+      imgUrl: stand,
+    },
+    {
+      name: "Marble Candles",
+      category: "Marble Candles",
+      imgUrl: marbleDeepak,
     },
   ];
 
@@ -82,13 +94,12 @@ const Home = () => {
             <div
               key={i}
               onClick={() => handleUpdateParams("category", data.category)}
-              className="flex-fill text-center position-relative"
+              className="text-center position-relative flex-shrink-0"
               style={{
-                minWidth: "140px",
+                width: "200px",
                 cursor: "pointer",
                 transition: "transform 0.3s ease",
               }}
-            
             >
               <div
                 className={`position-relative overflow-hidden ${
@@ -103,22 +114,24 @@ const Home = () => {
                   alt={data.name}
                   className="img-fluid w-100"
                   style={{
-                    height: "200px",
+                    height: "240px",
                     objectFit: "cover",
-                    filter: "brightness(0.95)",
                   }}
                 />
+
                 <div
                   className="position-absolute bottom-0 start-0 end-0 text-white py-3 px-2"
                   style={{
                     background:
                       "linear-gradient(to top, rgba(0,0,0,0.85), transparent)",
-                    backdropFilter: "blur(2px)",
                   }}
                 >
                   <p
                     className="mb-0 fw-semibold text-uppercase"
-                    style={{ fontSize: "0.85rem", letterSpacing: "1px" }}
+                    style={{
+                      fontSize: "0.85rem",
+                      letterSpacing: "1px",
+                    }}
                   >
                     {data.name}
                   </p>
