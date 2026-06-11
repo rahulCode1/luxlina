@@ -16,9 +16,9 @@ Built with React frontend, Express/Node backend, and MongoDB database.
 
 ```
 git clone https://github.com/rahulCode1/luxlina.git
-cd my-app
+cd luxlina
 npm install
-npm run dev
+npm start
 ```
 
 ---
@@ -30,6 +30,7 @@ npm run dev
 - Node JS
 - Express
 - Mongodb
+- JWT
 
 ## Demo Video
 
@@ -78,6 +79,10 @@ Watch a walkthrough (6 minutes) of all the major features of this app:
 -- Add, Update & delete address.
 -- View & Cancel user orders.
 
+**Authentication**
+-- Signup with name, email and password.
+-- Login with email and password.
+
 ---
 
 ## API Reference
@@ -92,7 +97,7 @@ Sample Response:<br>
 
 ```
 
-## **GET /api/products/id**<br>
+## **GET /api/products/:productId**<br>
 
 Product details<br>
 Sample Response:<br>
@@ -102,21 +107,13 @@ Sample Response:<br>
 
 ```
 
-## **POST /api/product/add**<br>
-
-Add Product<br>
-Sample Response<br>
-
-```
-{name, description, price, ...}
-```
-
-## **DELETE /api/product/id**<br>
+## **DELETE /api/product/:id**<br>
 
 Delete Product<br>
+Only admin can delete products <br>
 Sample Response<br>
 
-## **POST /api/cart/id**<br>
+## **POST /api/cart**<br>
 
 Add Product to Cart<br>
 Sample Response<br>
@@ -125,7 +122,7 @@ Sample Response<br>
 [{name, description, price, ...}, ...]
 ```
 
-## **GET /api/cart/id**<br>
+## **GET /api/cart**<br>
 
 GET ProductF from Cart<br>
 Sample Response<br>
@@ -134,7 +131,7 @@ Sample Response<br>
 [{name, description, price, ...}, ...]
 ```
 
-## **PATCH /api/cart/id**<br>
+## **PATCH /api/cart/:productId/increase**<br>
 
 Increase product quantity<br>
 Sample Response<br>
@@ -143,7 +140,7 @@ Sample Response<br>
 [{name, description, price, quantity, ...}, ...]
 ```
 
-## **PATCH /api/cart/decrease/id**<br>
+## **PATCH /api/cart/:productId/decrease**<br>
 
 Decrease product quantity<br>
 Sample Response<br>
@@ -152,12 +149,12 @@ Sample Response<br>
 [{name, description, price, quantity, ...}, ...]
 ```
 
-## **PATCH /api/cart/remove/id**<br>
+## **PATCH /api/cart/:productId/remove**<br>
 
 Remove product from Cart<br>
 Sample Response<br>
 
-## **PATCH /api/cart/moveto_wishlist/id**<br>
+## **PATCH /api/cart/:productId/moveto_wishlist**<br>
 
 Move Product to Wishlist<br>
 Sample Response<br>
@@ -166,7 +163,7 @@ Sample Response<br>
 [{name, description, price, quantity, ...}, ...]
 ```
 
-## **POST /api/cart/wishlist/id**<br>
+## **POST /api/wishlist/:productId**<br>
 
 Add or Remove Product to Wishlist<br>
 Sample Response<br>
@@ -175,7 +172,7 @@ Sample Response<br>
 [{name, description, price, quantity, ...}, ...]
 ```
 
-## **PATCH /api/cart/wishlist/id**<br>
+## **PATCH /api/wishlist/:productId**<br>
 
 Move Product to Cart.<br>
 Sample Response<br>
@@ -193,7 +190,7 @@ Sample Response<br>
 [{name, phoneNumber, zipCode,  ...}, ...]
 ```
 
-## **GET /api/address/id**<br>
+## **GET /api/address**<br>
 
 Get user addresses<br>
 Sample Response<br>
@@ -202,16 +199,16 @@ Sample Response<br>
 [{name, phoneNumber, zipCode,  ...}, ...]
 ```
 
-## **GET /api/address/address_info/id**<br>
+## **GET /api/address/address_info/:addressId**<br>
 
-Get user addresses information<br>
+Get user addresse details<br>
 Sample Response<br>
 
 ```
 {name, phoneNumber, zipCode,  ...}
 ```
 
-## **PATCH /api/address/update/:id/default**<br>
+## **PATCH /api/address/update/:addressId/default**<br>
 
 Update default address.<br>
 Sample Response<br>
@@ -220,7 +217,7 @@ Sample Response<br>
 {name, phoneNumber, isDefault,  ...}
 ```
 
-## **PATCH /api/address/update/:id**<br>
+## **PATCH /api/address/update/:addressId**<br>
 
 Update address.<br>
 Sample Response<br>
@@ -229,20 +226,20 @@ Sample Response<br>
 {name, phoneNumber, isDefault,  ...}
 ```
 
-## **DELETE /api/address/id**<br>
+## **DELETE /api/address/:addressId**<br>
 
 Delete user addresses<br>
 
-## **POST /api/order/:id**<br>
+## **POST /api/order**<br>
 
 Place Order.<br>
 Sample Response<br>
 
 ```
-[{products: [], orderSummary: {}, address, ...}]
+{products: [], orderSummary: {}, address, ...}
 ```
 
-## **GET /api/order/:id**<br>
+## **GET /api/order**<br>
 
 Get User Order.<br>
 Sample Response<br>
@@ -251,26 +248,33 @@ Sample Response<br>
 [{products: [], orderSummary: {}, address, ...}]
 ```
 
-## **POST /api/user**<br>
+## **POST /api/user/signup**<br>
 
 Add new User<br>
 Sample Response<br>
 
 ```
-{name, email}
+{name,  email, password }
 
 
 ```
 
-## **GET /api/user**<br>
+## **POST /api/user/login**<br>
 
-Get User<br>
+Login User<br>
 Sample Response<br>
 
 ```
-{name, email}
+{ email, password }
+```
+
+## **Guest Login**
+
+```
+Email: guest@gmail.com
+Password: 123456789
 ```
 
 ## Contact
 
-For bugs or feature request, please reach out to rahulkumawat50555@gmail.com
+For bugs or feature request, please reach out to rahul7497678@gmail.com

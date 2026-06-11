@@ -1,12 +1,12 @@
-import {  useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import kitchenCategory from "../imgs/kitchen.jpg";
 import { useState } from "react";
 import giftCategory from "../imgs/gifts.jpg";
 import religiousCategory from "../imgs/religious.jpg";
 import decoreCategory from "../imgs/decores.jpg";
 import ganesh from "../imgs/ganesh.png";
-import tray from "../imgs/tray.jpg";
-import newArrivals from "../imgs/new.jpg";
+import decore from "../imgs/decore.png";
+import deepak from "../imgs/deepak.png";
 
 const Home = () => {
   const [selectedCategory] = useState("all");
@@ -39,16 +39,16 @@ const Home = () => {
 
   const newArrival = [
     {
-      name: "Tray",
-      image: tray,
-      details: "White marble tray crafted from premium Makrana stone.",
-      category: "HomeDecor",
+      name: "Marble deepak",
+      image: deepak,
+      details: "White marble deepak crafted from premium Makrana stone.",
+      category: "New Arrivals",
     },
     {
-      name: "Basket",
-      image: newArrivals,
+      name: "Decore",
+      image: decore,
       details:
-        "Handcrafted white marble basket with detailed carving work, ideal for gifting.",
+        "Handcrafted white marble home decore items,  with detailed carving work, ideal for gifting.",
       category: "CorporateGifts",
     },
   ];

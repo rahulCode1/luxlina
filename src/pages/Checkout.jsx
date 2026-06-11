@@ -210,7 +210,7 @@ const Checkout = () => {
                   <option value="cod" selected>
                     Cash On Delivery
                   </option>
-                  <option value="online">Pay Online</option>
+               
                 </select>
 
                 <button

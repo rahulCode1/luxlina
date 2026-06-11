@@ -25,6 +25,7 @@ const EcommerceProvider = ({ children }) => {
       if (!isLogin) {
         return;
       }
+
       try {
         setIsLoadingAddress(true);
         const res = await api.get(`/address`);
@@ -33,7 +34,10 @@ const EcommerceProvider = ({ children }) => {
         // console.log(res.data)
         setAddress(address || []);
       } catch (error) {
-        console.error("Failed to fetch products:", error);
+        console.error(
+          error?.response?.data?.message || "Failed to fetch products:",
+          error,
+        );
       } finally {
         setIsLoadingAddress(false);
       }
@@ -62,9 +66,12 @@ const EcommerceProvider = ({ children }) => {
         setProductCart(transformCart || []);
         setIsLoadingCart(false);
       } catch (error) {
-        console.error("Failed to fetch cart.", error);
-      }finally{
-        setIsLoadingCart(false)
+        console.error(
+          error?.response?.data?.message || "Failed to fetch cart.",
+          error,
+        );
+      } finally {
+        setIsLoadingCart(false);
       }
     };
 
@@ -88,7 +95,12 @@ const EcommerceProvider = ({ children }) => {
         setIsLoadingWishlist(false);
         setWishList(transformData || []);
       } catch (error) {
-        console.error("Failed to fetch wishlist.", error);
+        console.error(
+          error?.response?.data?.message || "Failed to fetch wishlist.",
+          error,
+        );
+      } finally {
+        setIsLoadingWishlist(false);
       }
     };
 
@@ -137,9 +149,7 @@ const EcommerceProvider = ({ children }) => {
   const handleIncreaseQuantity = async (productId) => {
     const toastId = toast.loading("Increase quantity...");
     try {
-      const response = await api.patch(`/cart`, {
-        productId,
-      });
+      const response = await api.patch(`/cart/${productId}/increase`);
 
       // console.log(response.data);
       setProductCart((prevCart) => {
@@ -162,7 +172,7 @@ const EcommerceProvider = ({ children }) => {
   const handleDecreaseQuantity = async (productId) => {
     const toastId = toast.loading("Decrease quantity...");
     try {
-      const response = await api.patch(`/cart/decrease`, { productId });
+      const response = await api.patch(`/cart/${productId}/decrease`);
 
       console.log(response.data);
 
@@ -192,9 +202,7 @@ const EcommerceProvider = ({ children }) => {
     const tostId = toast.loading("Remove from cart...");
 
     try {
-      const response = await api.patch(`/cart/remove`, {
-        productId,
-      });
+      const response = await api.patch(`/cart/${productId}/remove`);
 
       setProductCart((prevCart) =>
         prevCart.filter((cart) => cart.id !== productId),
@@ -216,11 +224,11 @@ const EcommerceProvider = ({ children }) => {
       setError("Please login, to add product to cart.");
       return navigate("/login");
     }
+
     const tostId = toast.loading("Adding to wishlist...");
+
     try {
-      const response = await api.post(`/wishlist`, {
-        productId: product.id,
-      });
+      const response = await api.post(`/wishlist/${product.id}`);
 
       setWishList((prevStat) => {
         const exist = prevStat.find(
@@ -232,10 +240,7 @@ const EcommerceProvider = ({ children }) => {
             (wishProduct) => wishProduct.id !== product.id,
           );
         } else {
-          toast.success(
-            response.data?.message || "Successfully added to wishlist.",
-            { id: tostId },
-          );
+          toast.success("Successfully added to wishlist.", { id: tostId });
 
           return [...prevStat, { ...product }];
         }
@@ -248,11 +253,9 @@ const EcommerceProvider = ({ children }) => {
   };
 
   const handleRemoveToWishList = async (product) => {
-    const tostId = toast.loading("Remove to wishlist...");
+    const tostId = toast.loading("Removing from  wishlist...");
     try {
-      const response = await api.post(`/wishlist`, {
-        productId: product.id,
-      });
+      const response = await api.post(`/wishlist/${product?.id}`);
 
       console.log(response.data);
       setWishList((prevStat) => {
@@ -260,10 +263,7 @@ const EcommerceProvider = ({ children }) => {
           (wishProduct) => wishProduct.id === product.id,
         );
         if (exist) {
-          toast.success(
-            response.data?.message || "Product removed from wishlist.",
-            { id: tostId },
-          );
+          toast.success("Product removed from wishlist.", { id: tostId });
           return prevStat.filter(
             (wishProduct) => wishProduct.id !== product.id,
           );
@@ -273,7 +273,7 @@ const EcommerceProvider = ({ children }) => {
       });
     } catch (error) {
       throw new Error(
-        error || "Error occurred while remove product to wishlist.",
+        error || "Error occurred while removing product from wishlist.",
       );
     }
   };
@@ -282,9 +282,7 @@ const EcommerceProvider = ({ children }) => {
     const tostId = toast.loading("Adding to cart...");
 
     try {
-      const response = await api.patch(`/wishlist`, {
-        productId: product.id,
-      });
+      const response = await api.patch(`/wishlist/${product?.id}`);
 
       console.log(response.data);
 
@@ -316,9 +314,7 @@ const EcommerceProvider = ({ children }) => {
     const tostId = toast.loading("Adding to wishlist...");
 
     try {
-      const response = await api.patch(`/cart/moveto_wishlist`, {
-        productId: product.id,
-      });
+      const response = await api.patch(`/cart/${product?.id}/moveto_wishlist`);
 
       setWishList((prevStat) => {
         const exist = prevStat.find((wishPrd) => wishPrd.id === product.id);
@@ -419,6 +415,7 @@ const EcommerceProvider = ({ children }) => {
       value={{
         error,
         user,
+        setUser,
         isLogin,
         setIsLogin,
         setError,

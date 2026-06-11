@@ -1,5 +1,4 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
-
 import { useEcommerce } from "../context/EcommerceContext";
 import ProductImageCarousel from "./ProductImageCarousel";
 
@@ -8,11 +7,22 @@ import free from "../imgs/free.png";
 import payment from "../imgs/payment.png";
 import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
+import api from "../utils/axios";
+import ErrorModal from "./ErrorModal";
 
 const ProductItem = ({ productData }) => {
   const [quantity, setQuantity] = useState(1);
-  const { productCart, wishlist, handleAddToWishList, handleAddToCart } =
-    useEcommerce();
+  const [isDeleting, setIsDeleting] = useState(false);
+  const {
+    user,
+    error,
+    setError,
+    productCart,
+    wishlist,
+    handleAddToWishList,
+    handleRemoveToWishList,
+    handleAddToCart,
+  } = useEcommerce();
   const navigate = useNavigate();
   const productId = useParams()?.id;
 
@@ -27,13 +37,28 @@ const ProductItem = ({ productData }) => {
     return productCart.some((cart) => cart.id === id);
   };
 
-  
+  const handleDeleteProduct = async (e) => {
+    e.preventDefault();
+
+    try {
+      setIsDeleting(true);
+      const res = await api.delete(`/product/${productId}`);
+      console.log(res.data);
+      navigate("/products");
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to delete product");
+      console.log(err.response?.data?.message || "Failed to delete product");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [productId]);
   return (
     <>
+      {error && <ErrorModal message={error} onClose={() => setError(null)} />}
       <main className="bg-light min-vh-100">
         <section className="container py-4 py-lg-5">
           <div className="row g-4">
@@ -150,19 +175,21 @@ const ProductItem = ({ productData }) => {
 
                       {/* Wishlist */}
                       {checkProductIsWishlist(productInfo.id) ? (
-                        <Link
-                          to="/wishlist"
-                          className="btn btn-outline-danger d-flex align-items-center justify-content-center"
+                        <button
+                          onClick={() =>
+                            handleRemoveToWishList(productInfo, navigate)
+                          }
+                          className="btn btn-dark"
                           style={{ width: "56px" }}
                         >
-                          <i className="bi bi-heart-fill"></i>
-                        </Link>
+                          ❤️
+                        </button>
                       ) : (
                         <button
                           onClick={() =>
                             handleAddToWishList(productInfo, navigate)
                           }
-                          className="btn btn-outline-secondary"
+                          className="btn btn-dark"
                           style={{ width: "56px" }}
                         >
                           <i className="bi bi-heart"></i>
@@ -188,6 +215,22 @@ const ProductItem = ({ productData }) => {
                       >
                         <i className="bi bi-cart-plus me-2"></i>
                         Add To Cart
+                      </button>
+                    )}
+
+                   {console.log(productInfo?.createdBy)}
+                   {console.log(user)}
+
+                    {user.userId === productInfo?.createdBy && (
+                      <button
+                        onClick={handleDeleteProduct}
+                        disabled={isDeleting}
+                        className="btn btn-danger w-100 my-3 py-2"
+                      >
+                        {isDeleting ? "Deleting..." : "Delete"}
+                        {isDeleting && (
+                          <span className="spinner-border spinner-border-sm ms-2" />
+                        )}
                       </button>
                     )}
                   </div>

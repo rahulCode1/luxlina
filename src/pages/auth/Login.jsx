@@ -12,7 +12,7 @@ const Login = () => {
   };
   const [formData, setFormData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
-  const { setIsLogin, error, setError } = useEcommerce();
+  const { setIsLogin, error, setError, setUser } = useEcommerce();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -38,8 +38,14 @@ const Login = () => {
         JSON.stringify({
           name: response.data?.name,
           email: response.data?.email,
+          userId: response.data?.userId,
         }),
       );
+      setUser({
+        name: response.data?.name,
+        email: response.data?.email,
+        userId: response.data?.userId,
+      });
       setIsLogin(true);
       toast.success(response.data.message || "User login successfully", {
         id: toastId,
@@ -50,7 +56,6 @@ const Login = () => {
       toast.error(error.response?.data?.message || "Login failed.", {
         id: toastId,
       });
-      
     } finally {
       setIsLoading(false);
     }

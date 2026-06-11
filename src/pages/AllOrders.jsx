@@ -138,7 +138,9 @@ const AllOrders = () => {
                               {order.orderStatus !== "cancelled" &&
                                 order.orderStatus !== "delivered" && (
                                   <button
-                                    onClick={() => handleCancelOrder(order.id, revalidator)}
+                                    onClick={() =>
+                                      handleCancelOrder(order.id, revalidator)
+                                    }
                                     className="btn btn-outline-danger btn-sm"
                                   >
                                     <i className="bi bi-x-circle me-2"></i>
@@ -198,9 +200,10 @@ const AllOrders = () => {
                                   </td>
                                   <td className="text-center">
                                     <span className="badge bg-secondary">
-                                      Qty: {product?.productId?.quantity}
+                                      Qty: {product?.quantity}
                                     </span>
                                   </td>
+
                                   <td className="text-end">
                                     <strong className="text-primary">
                                       ₹

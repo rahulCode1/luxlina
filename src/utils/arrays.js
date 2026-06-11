@@ -1,4 +1,4 @@
-export const  inputFields = [
+export const inputFields = [
   {
     id: "name",
     name: "name",
@@ -64,27 +64,24 @@ export const  inputFields = [
   },
 ];
 
+export const tagsArray = [
+  { value: "GodStatues", label: "God/Goddess Statues" },
+  { value: "AnimalFigurines", label: "Animal Figurines" },
+  { value: "BuddhaStatues", label: "Buddha Statues" },
+  { value: "ModernSculptures", label: "Modern Sculptures" },
+  { value: "MortarPestle", label: "Mortar & Pestle" },
+  { value: "CuttingBoards", label: "Cutting Boards" },
+  { value: "FruitBowls", label: "Fruit Bowls" },
+  { value: "PenHolders", label: "Pen Holders" },
+  { value: "Paperweights", label: "Paperweights" },
+  { value: "Trophies", label: "Trophies" },
+  { value: "TempleMandir", label: "Temple/Mandir" },
+  { value: "PoojaThalis", label: "Pooja Thalis" },
+  { value: "IncenseHolders", label: "Incense Holders" },
+  { value: "PrayerItems", label: "Prayer Items" },
+];
 
-
-
-export  const tagsArray = [
-    { value: "GodStatues", label: "God/Goddess Statues" },
-    { value: "AnimalFigurines", label: "Animal Figurines" },
-    { value: "BuddhaStatues", label: "Buddha Statues" },
-    { value: "ModernSculptures", label: "Modern Sculptures" },
-    { value: "MortarPestle", label: "Mortar & Pestle" },
-    { value: "CuttingBoards", label: "Cutting Boards" },
-    { value: "FruitBowls", label: "Fruit Bowls" },
-    { value: "PenHolders", label: "Pen Holders" },
-    { value: "Paperweights", label: "Paperweights" },
-    { value: "Trophies", label: "Trophies" },
-    { value: "TempleMandir", label: "Temple/Mandir" },
-    { value: "PoojaThalis", label: "Pooja Thalis" },
-    { value: "IncenseHolders", label: "Incense Holders" },
-    { value: "PrayerItems", label: "Prayer Items" },
-  ];
-
-  export const seoInputs = [
+export const seoInputs = [
   {
     id: "metaTitle",
     name: "metaTitle",
@@ -115,7 +112,6 @@ export const ratingField = {
   ],
 };
 
-
 export const materialTypeField = {
   id: "materialType",
   name: "materialType",
@@ -143,5 +139,6 @@ export const categoryField = {
     { value: "GardenOutdoor", label: "Garden & Outdoor" },
     { value: "CorporateGifts", label: "Corporate Gifts" },
     { value: "ReligiousItems", label: "Religious Items" },
+    { value: "New Arrivals", label: "New Arrivals" },
   ],
 };
