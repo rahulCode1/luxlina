@@ -4,11 +4,15 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import Loading from "../components/Loading";
 import api from "../utils/axios";
+import ErrorModal from "../components/ErrorModal";
 
 export default function UserProfile() {
   const [isLoading, setIsLoading] = useState(false);
+  const [addressId, setAddressId] = useState("");
   const {
     user,
+    error,
+    setError,
     address,
     handleSelectDefaultAddress,
     isLoadingAddress,
@@ -17,25 +21,32 @@ export default function UserProfile() {
 
   const removeAddress = async (id) => {
     const toastId = toast.loading("Address remove...");
+    setAddressId(id);
     setIsLoading(true);
     try {
       const response = await api.delete(`/address/${id}`);
 
-      console.log(response.data);
+      // console.log(response.data);
       toast.success(
         response?.data?.message || "Address removed successfully.",
         { id: toastId },
       );
       setIsLoading(false);
+      setAddressId("");
       handleRemoveAddress(id);
     } catch (error) {
-      toast.error("Failed to remove address.", { id: toastId });
+      setError(error.response?.data?.message || "Failed to remove address.");
+      toast.error(
+        error.response?.data?.message || "Failed to remove address.",
+        { id: toastId },
+      );
     }
   };
 
   return (
     <>
       <div className="container-fluid bg-light min-vh-100 py-5">
+        {error && <ErrorModal message={error} onClose={() => setError(null)} />}
         <div className="container">
           <div className="row g-4">
             {/* Profile Card */}
@@ -309,7 +320,7 @@ export default function UserProfile() {
                                   disabled={isLoading}
                                   className="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center"
                                 >
-                                  {isLoading ? (
+                                  {addressId === userAdd?.id && isLoading ? (
                                     <>
                                       <span className="spinner-border spinner-border-sm me-2"></span>
                                       Deleting...
