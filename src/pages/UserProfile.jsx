@@ -31,7 +31,7 @@ export default function UserProfile() {
         response?.data?.message || "Address removed successfully.",
         { id: toastId },
       );
-      setIsLoading(false);
+
       setAddressId("");
       handleRemoveAddress(id);
     } catch (error) {
@@ -40,6 +40,8 @@ export default function UserProfile() {
         error.response?.data?.message || "Failed to remove address.",
         { id: toastId },
       );
+    } finally {
+      setIsLoading(false);
     }
   };
 
