@@ -11,7 +11,7 @@ import {
   FiHome,
   FiLock,
 } from "react-icons/fi";
-import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
+import { NavLink, useNavigate, useSearchParams, Link } from "react-router-dom";
 import { useEcommerce } from "../context/EcommerceContext";
 import { useState } from "react";
 
@@ -57,7 +57,11 @@ const Header = () => {
         <nav>
           {/* Top row */}
           <div className="flex items-center justify-between  px-3 md:px-5 h-14">
-            <h2 className="text-xl font-semibold text-gray-900 m-0">Luxlina</h2>
+            <Link to="/" className="text-decoration-none">
+              <h2 className="text-xl font-semibold text-gray-900 m-0 ">
+                Luxlina
+              </h2>
+            </Link>
 
             <div className="hidden md:block grow mx-5">
               {/* Inline search for md and large screen */}
