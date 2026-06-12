@@ -339,7 +339,7 @@ const EcommerceProvider = ({ children }) => {
   };
 
   const handleAddAddress = (address) => {
-    setAddress((prevStat) => [...prevStat, { ...address, isDefault: false }]);
+    setAddress((prevStat) => [...prevStat, { ...address }]);
   };
 
   const handleRemoveAddress = (addressId) => {

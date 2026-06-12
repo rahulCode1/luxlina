@@ -39,6 +39,9 @@ const Checkout = () => {
     address.length > 0 &&
     address.find((address) => address.isDefault === true);
 
+    console.log(address)
+
+
   const handleSubmitOrder = async () => {
     if (address.length === 0) {
       return setError("Please add address.");

@@ -86,10 +86,10 @@ const AllOrders = () => {
                               {order.address?.fullAddress}
                             </p>
                             <p className="mb-0 text-muted small">
-                              {order.address?.area}, {order.address.city}
+                              {order.address?.area}, {order.address?.city}
                             </p>
                             <p className="mb-0 text-muted small">
-                              {order.address?.state} - {order.address.zipCode}
+                              {order.address?.state} - {order.address?.zipCode}
                             </p>
                           </div>
                         </div>
