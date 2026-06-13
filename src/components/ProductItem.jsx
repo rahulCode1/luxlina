@@ -218,9 +218,6 @@ const ProductItem = ({ productData }) => {
                       </button>
                     )}
 
-                   {console.log(productInfo?.createdBy)}
-                   {console.log(user)}
-
                     {user.userId === productInfo?.createdBy && (
                       <button
                         onClick={handleDeleteProduct}
