@@ -35,7 +35,7 @@ npm start
 ## Demo Video
 
 Watch a walkthrough (6 minutes) of all the major features of this app:
-[Google drive link](https://drive.google.com/file/d/1sRnu-lii1OZmBhoFYYujOxuP8v8na-eQ/view?usp=sharing)
+[Loom Video](https://drive.google.com/file/d/1t7jOghqXzJd2NsncmVNN9QZqCwGW71C8/view?usp=sharing)
 
 ---
 

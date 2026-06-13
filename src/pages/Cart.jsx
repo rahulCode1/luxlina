@@ -18,7 +18,7 @@ const Cart = () => {
     handleCartToWishList,
   } = useEcommerce();
 
-  console.log(productCart)
+  console.log(productCart);
 
   const isExistOnWishlist = (productId) => {
     return wishlist.some((wish) => wish.id === productId);
@@ -35,15 +35,17 @@ const Cart = () => {
               <div className="card mb-4 shadow-sm border-0 rounded-3">
                 <div className="row g-0">
                   <div className="col-md-4">
-                    <img
-                      src={product.images[0].url}
-                      className="img-fluid w-100 h-100"
-                      style={{
-                        objectFit: "cover",
-                        borderRadius: "12px 0 0 12px",
-                      }}
-                      alt={product.name}
-                    />
+                    <Link to={`/products/${product?.id}`}>
+                      <img
+                        src={product.images[0].url}
+                        className="img-fluid w-100 h-100"
+                        style={{
+                          objectFit: "cover",
+                          borderRadius: "12px 0 0 12px",
+                        }}
+                        alt={product.name}
+                      />
+                    </Link>
                   </div>
 
                   <div className="col-md-8 d-flex align-items-center">
@@ -102,9 +104,10 @@ const Cart = () => {
                           Remove
                         </button>
 
-                        
                         {isExistOnWishlist(product.id) ? (
-                          <Link to={"/wishlist"} className="btn btn-primary">Go to Wishlist </Link>
+                          <Link to={"/wishlist"} className="btn btn-primary">
+                            Go to Wishlist{" "}
+                          </Link>
                         ) : (
                           <button
                             onClick={() => handleCartToWishList(product)}
