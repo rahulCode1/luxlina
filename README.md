@@ -41,6 +41,12 @@ Watch a walkthrough (6 minutes) of all the major features of this app:
 
 ## Features
 
+## Login
+
+**Guest** <br>
+Email: `guest@gmail.com` <br>
+Password: `123456789`
+
 **Home**
 
 - Display different products category.
