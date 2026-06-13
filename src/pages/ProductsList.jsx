@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import CategoryFilter from "../components/CategoryFilter";
 import ProductCard from "../components/ProductCard";
@@ -16,9 +15,6 @@ const ProductsList = ({ productsList }) => {
     { name: "2 Stars & Above", value: 2, id: "2star", radioName: "rating" },
     { name: "1 Stars & Above", value: 1, id: "1star", radioName: "rating" },
   ];
-
-
-  
 
   const [sortBy, setSortBy] = useState("");
 
@@ -48,12 +44,12 @@ const ProductsList = ({ productsList }) => {
               .toLowerCase()
               .includes(searchProductText.toLowerCase()) ||
             product.tags.some((tag) =>
-              tag.toLowerCase().includes(searchProductText.toLowerCase())
-            )
+              tag.toLowerCase().includes(searchProductText.toLowerCase()),
+            ),
         );
 
   const priceFilter = searchedProduct.filter(
-    (product) => Number(product.discountPrice) <= Number(changePrice)
+    (product) => Number(product.discountPrice) <= Number(changePrice),
   );
 
   const categoryFilter =
@@ -69,11 +65,16 @@ const ProductsList = ({ productsList }) => {
   const handleOnChangeCategory = (e) => {
     const { checked, value } = e.target;
 
+    if (value === searchParams.get("category")) {
+      searchParams.delete("category");
+      setSearchParams(searchParams);
+    }
+
     if (checked) {
       setCategory((prevStat) => [...prevStat, value]);
     } else {
       setCategory((prevStat) =>
-        prevStat.filter((category) => category !== value)
+        prevStat.filter((category) => category !== value),
       );
     }
   };
@@ -82,11 +83,11 @@ const ProductsList = ({ productsList }) => {
 
   if (sortBy === "HighToLow") {
     sortedArray.sort(
-      (a, b) => Number(b.discountPrice) - Number(a.discountPrice)
+      (a, b) => Number(b.discountPrice) - Number(a.discountPrice),
     );
   } else if (sortBy === "LowToHigh") {
     sortedArray.sort(
-      (a, b) => Number(a.discountPrice) - Number(b.discountPrice)
+      (a, b) => Number(a.discountPrice) - Number(b.discountPrice),
     );
   }
 

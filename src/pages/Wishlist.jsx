@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useEcommerce } from "../context/EcommerceContext";
 import Loading from "../components/Loading";
 
@@ -21,13 +22,14 @@ const Wishlist = () => {
             wishlist.map((product) => (
               <div className="col-md-4" key={product.id}>
                 <div className="card h-100 shadow-sm">
-                  <img
-                    src={product.images[0].url}
-                    className="card-img-top object-fit-cover"
-                    style={{ height: "250px" }}
-                    alt={product.name}
-                  />
-
+                  <Link to={`/products/${product?.id}`}>
+                    <img
+                      src={product.images[0].url}
+                      className="card-img-top object-fit-cover"
+                      style={{ height: "250px" }}
+                      alt={product.name}
+                    />
+                  </Link>
                   <div className="card-body text-center d-flex flex-column">
                     <h5 className="card-title">{product.name}</h5>
                     <p className="mb-3">Price: ₹{product.price}</p>
